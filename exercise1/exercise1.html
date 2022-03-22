@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<link href="exercise1.css" rel="stylesheet" type="text/css"><link>
+		<script src="jQuery.js" type="text/javascript"></script>
+		<script src="exercise1.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<script>
+
+			const menu = new UI.Menu();
+
+			//
+			// Home menu
+			//
+			const menuHome = new UI.MenuItem({
+				label: "Home",
+				href: "http://www.invalid-domain.com/invalid-link",
+			});
+			menu.add( menuHome );
+			//
+			// Home menu
+			//
+
+			//
+			// Help menu
+			//
+			const menuHelp = new UI.MenuItem({ label: "Help" });
+			const menuItemHelpSomeone = new UI.MenuItem({
+				label: "Help someone",
+				click: () => {
+					alert("Help someone");
+				},
+				icon: new UI.Icon("pacman.png"),
+			});
+			const menuItemHelpEveryone = new UI.MenuItem({
+				label: "Help everyone",
+				click: () => {
+					alert("Help everyone");
+				},
+				icon: new UI.Icon("ghost.png"),
+			});
+			menuHelp.add(menuItemHelpSomeone);
+			menuHelp.add(menuItemHelpEveryone);
+			menu.add( menuHelp );
+			//
+			// Help menu
+			//
+		
+			// attach menu to body
+			menu.appendTo(document.body);
+
+		</script>
+	</body>
+</html>
