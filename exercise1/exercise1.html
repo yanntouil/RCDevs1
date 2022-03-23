@@ -1,53 +1,158 @@
 <html>
 	<head>
 		<link href="exercise1.css" rel="stylesheet" type="text/css"><link>
-		<script src="jQuery.js" type="text/javascript"></script>
 		<script src="exercise1.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<script>
-
 			const menu = new UI.Menu();
 
 			//
 			// Home menu
 			//
-			const menuHome = new UI.MenuItem({
+			const home = new UI.MenuItem({
 				label: "Home",
 				href: "http://www.invalid-domain.com/invalid-link",
 			});
-			menu.add( menuHome );
+			menu.add(home);
 			//
 			// Home menu
 			//
 
+
+
+			//
+			// File menu
+			//
+			const fileMenu = new UI.MenuItem({ label: "File" });
+			fileMenu.add(new UI.MenuItem({
+				label: "New",
+				click: () => {
+					alert("New");
+				},
+				icon: new UI.Icon("pacman.png"),
+			}));
+			fileMenu.add(new UI.MenuItem({
+				label: "Open",
+				click: () => {
+					alert("Open");
+				},
+				icon: new UI.Icon("ghost.png"),
+			}));
+			fileMenu.add(new UI.MenuItem({
+				label: "Save",
+				click: () => {
+					alert("Save");
+				},
+				icon: new UI.Icon("ghost.png"),
+			}));
+			menu.add(fileMenu);
+			//
+			// File menu
+			//
+
+
+
+			//
+			// Edit menu
+			//
+			const editMenu = new UI.MenuItem({ label: "Edit" });
+			editMenu.add(new UI.MenuItem({
+				label: "Cut",
+				click: () => {
+					alert("Cut");
+				},
+			}));
+			editMenu.add(new UI.MenuItem({
+				label: "Copy",
+				click: () => {
+					alert("Copy");
+				},
+			}));
+			editMenu.add(new UI.MenuItem({
+				label: "Paste",
+				click: () => {
+					alert("Paste");
+				},
+			}));
+
+			const searchAndFindMenu = new UI.MenuItem({ label: "Search and find" });
+			searchAndFindMenu.add(new UI.MenuItem({
+				label: "Find",
+				click: () => {
+					alert("Find");
+				},
+			}));
+			searchAndFindMenu.add(new UI.MenuItem({
+				label: "Find and replace",
+				click: () => {
+					alert("Find and replace");
+				},
+			}));
+			searchAndFindMenu.add(new UI.MenuItem({
+				label: "Find and replace all",
+				click: () => {
+					alert("Find and replace all");
+				},
+			}));
+
+			const moreSearchAndFindMenu = new UI.MenuItem({ label: "Deeper search??" });
+			moreSearchAndFindMenu.add(new UI.MenuItem({
+				label: "Find deeper",
+				click: () => {
+					alert("Find deeper");
+				},
+			}));
+			moreSearchAndFindMenu.add(new UI.MenuItem({
+				label: "Find and replace deeper",
+				click: () => {
+					alert("Find and replace deeper");
+				},
+			}));
+
+			searchAndFindMenu.add(moreSearchAndFindMenu);
+			editMenu.add(searchAndFindMenu);
+			menu.add(editMenu);
+			//
+			// Edit menu
+			//
+
+
+
 			//
 			// Help menu
 			//
-			const menuHelp = new UI.MenuItem({ label: "Help" });
-			const menuItemHelpSomeone = new UI.MenuItem({
+			const helpMenu = new UI.MenuItem({ label: "Help" });
+			helpMenu.add(new UI.MenuItem({
 				label: "Help someone",
 				click: () => {
 					alert("Help someone");
 				},
 				icon: new UI.Icon("pacman.png"),
-			});
-			const menuItemHelpEveryone = new UI.MenuItem({
+			}));
+			helpMenu.add(new UI.MenuItem({
 				label: "Help everyone",
 				click: () => {
 					alert("Help everyone");
 				},
 				icon: new UI.Icon("ghost.png"),
-			});
-			menuHelp.add(menuItemHelpSomeone);
-			menuHelp.add(menuItemHelpEveryone);
-			menu.add( menuHelp );
+			}));
+			helpMenu.add(new UI.MenuItem({
+				label: "About",
+				click: () => {
+					alert("About");
+				},
+				icon: new UI.Icon("ghost.png"),
+			}));
+			menu.add(helpMenu);
 			//
 			// Help menu
 			//
-		
+
+
 			// attach menu to body
 			menu.appendTo(document.body);
+
 
 		</script>
 	</body>

@@ -1,27 +1,91 @@
-const UI = {};
+const UI = {}
 
-UI.Icon = function( src ) {
-	var src = src;
-	this.src = function() {
-		return src;					
-	};
-};
+/**
+ * @class Icon
+ */
+UI.Icon = class Icon {
+	constructor(src) {
+		this.src = src;
+	}
+}
 
-UI.MenuItem = function(properties) {
+/**
+ * @class MenuItem
+ */
+UI.MenuItem = class MenuItem {
+	constructor({ label, href, click, icon }) {
+		this.label = label
+        this.type = href ? 'link' : click ? 'button' : 'label'
+        if (click) this.click = click
+        if (href) this.href = href
+        if (icon) this.icon = icon
+        this.children = []
+	}
+    add (menuItem) {
+        this.children.push(menuItem)
+    }
+    getElement (subMenuArrows = false) {
+        const haveChild = this.children.length > 0
+        const elMenuItem = document.createElement('li')
+        elMenuItem.classList.add('all_off', haveChild ? 'with_child' : 'no_child')
+        // Bind hover state
+        elMenuItem.addEventListener('mouseover', () => {
+            elMenuItem.classList.add(haveChild ? 'with_child_on' : 'no_child_on')
+            elMenuItem.classList.remove('all_off')
+        })
+        elMenuItem.addEventListener('mouseout', () => {
+            elMenuItem.classList.remove(haveChild ? 'with_child_on' : 'no_child_on')
+            elMenuItem.classList.add('all_off')
+        })
+        // Link or button or label
+        const elLink = document.createElement('a')
+        elLink.innerHTML = `
+            <table>
+                <tbody>
+                    <tr>
+                        <td>${this.icon ? `<img src="${this.icon.src}">` : ''}</td>
+                        <td>${this.label}</td>
+                        ${haveChild && subMenuArrows ? `
+                            <td>
+                                <img src='right_arrow.png'>
+                            <td>
+                        ` : ''}
+                    </tr>
+                </tbody>
+            </table>
+        `
+        if (this.type === 'button') elLink.addEventListener('click', this.click)
+        else if (this.type === 'link') elLink.setAttribute('href', this.href)
+        elMenuItem.append(elLink)
+        // Children elements
+        if (haveChild) {
+            const elSubmenu = document.createElement('ul')
+            this.children.forEach(menuItem => elSubmenu.append(menuItem.getElement(true)))
+            elMenuItem.append(elSubmenu)
+        }
+        return elMenuItem
+    }
+}
 
-	this.add = function(menuItem) {
+/**
+ * @class Menu
+ */
+UI.Menu = class Menu {
+    constructor() {
+        this.children = []
+    }
+	add (menuItem) {
+        this.children.push(menuItem)
+	}
+	appendTo (DOMElement) {
+        const elMenu = document.createElement('ul')
+        elMenu.classList.add('menu', 'horizontal', 'ltr')
+        this.children.forEach(menuItem => 
+            elMenu.append(menuItem.getElement(false))
+        )
+        DOMElement.append(elMenu)
+	}
+}
 
-	};
 
-};
-UI.Menu = function() {
 
-	this.add = function(menuItem) {
-
-	};
-
-	this.appendTo = function(DOMElement) {
-
-	};
-
-};
