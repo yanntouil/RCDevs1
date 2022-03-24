@@ -29,14 +29,21 @@ UI.MenuItem = class MenuItem {
         const elMenuItem = document.createElement('li')
         elMenuItem.classList.add('all_off', haveChild ? 'with_child' : 'no_child')
         // Bind hover state
-        elMenuItem.addEventListener('mouseover', () => {
+        elMenuItem.addEventListener('click', () => {
             elMenuItem.classList.add(haveChild ? 'with_child_on' : 'no_child_on')
             elMenuItem.classList.remove('all_off')
+            document.addEventListener("click", this.clickOutsideListener)
         })
-        elMenuItem.addEventListener('mouseout', () => {
+        this.clickOutsideListener = ({ target }) => {
+            let clickTarget = target
+            do {
+                if (clickTarget === elMenuItem) return
+                clickTarget = clickTarget.parentNode
+            } while (clickTarget);
+            document.removeEventListener("click", this.clickOutsideListener)
             elMenuItem.classList.remove(haveChild ? 'with_child_on' : 'no_child_on')
             elMenuItem.classList.add('all_off')
-        })
+        }
         // Link or button or label
         const elLink = document.createElement('a')
         elLink.innerHTML = `
